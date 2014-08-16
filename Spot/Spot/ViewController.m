@@ -23,16 +23,16 @@
     NSURL* parkURL = [NSURL URLWithString:@"http://services.arcgis.com/N2GXMYZXEr0aZccy/arcgis/rest/services/Parking_Regulation_Shapefile/FeatureServer/0"];
     
     AGSTiledMapServiceLayer *tiledLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
-    AGSFeatureLayer *parkLayer = [AGSFeatureLayer featureServiceLayerWithURL:parkURL mode:AGSFeatureLayerModeOnDemand];
+    AGSFeatureLayer *signsLayer = [AGSFeatureLayer featureServiceLayerWithURL:parkURL mode:AGSFeatureLayerModeOnDemand];
     
     //expose layer fields to be accssible by callouts
-    parkLayer.outFields = [NSArray arrayWithObject:@"*"];
+    signsLayer.outFields = [NSArray arrayWithObject:@"*"];
     
     //allow to display callouts on taping the feature
-    parkLayer.allowCallout = YES;
+    signsLayer.allowCallout = YES;
     
     [self.mapView addMapLayer:tiledLayer withName:@"Park Data"];
-    [self.mapView addMapLayer:parkLayer];
+    [self.mapView addMapLayer:signsLayer];
     
     self.mapView.callout.delegate = self;
     
