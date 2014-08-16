@@ -54,7 +54,7 @@
 		53B7130E199FEBC000224CBF /* SpotTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpotTests-Info.plist"; sourceTree = "<group>"; };
 		53B71310199FEBC000224CBF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53B71312199FEBC000224CBF /* SpotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotTests.m; sourceTree = "<group>"; };
-		53B7131C199FED5900224CBF /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../../../Library/SDKs/ArcGIS/iOS/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
+		53B7131C199FED5900224CBF /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../../Library/SDKs/ArcGIS/iOS/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +103,7 @@
 		53B712E6199FEBC000224CBF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53B7131C199FED5900224CBF /* ArcGIS.bundle */,
 				53B712E7199FEBC000224CBF /* Foundation.framework */,
 				53B712E9199FEBC000224CBF /* CoreGraphics.framework */,
 				53B712EB199FEBC000224CBF /* UIKit.framework */,
@@ -128,7 +129,6 @@
 		53B712EE199FEBC000224CBF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				53B7131C199FED5900224CBF /* ArcGIS.bundle */,
 				53B712EF199FEBC000224CBF /* Spot-Info.plist */,
 				53B712F0199FEBC000224CBF /* InfoPlist.strings */,
 				53B712F3199FEBC000224CBF /* main.m */,

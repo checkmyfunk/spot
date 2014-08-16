@@ -25,9 +25,25 @@
     AGSTiledMapServiceLayer *tiledLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
     AGSFeatureLayer *parkLayer = [AGSFeatureLayer featureServiceLayerWithURL:parkURL mode:AGSFeatureLayerModeOnDemand];
     
+    //expose layer fields to be accssible by callouts
+    parkLayer.outFields = [NSArray arrayWithObject:@"*"];
+    
+    //allow to display callouts on taping the feature
+    parkLayer.allowCallout = YES;
+    
     [self.mapView addMapLayer:tiledLayer withName:@"Park Data"];
     [self.mapView addMapLayer:parkLayer];
     
+    self.mapView.callout.delegate = self;
+    
+}
+
+- (BOOL) callout:(AGSCallout *)callout willShowForFeature:(id<AGSFeature>)feature layer:(AGSLayer<AGSHitTestable> *)layer mapPoint:(AGSPoint *)mapPoint {
+    
+    self.mapView.callout.title = (NSString*)[feature attributeForKey:@"x"];
+	self.mapView.callout.detail = (NSString*)[feature attributeForKey:@"SIGNDESC1"];
+    
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning
