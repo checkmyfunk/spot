@@ -21,6 +21,7 @@
 		53B71309199FEBC000224CBF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B712EB199FEBC000224CBF /* UIKit.framework */; };
 		53B71311199FEBC000224CBF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53B7130F199FEBC000224CBF /* InfoPlist.strings */; };
 		53B71313199FEBC000224CBF /* SpotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B71312199FEBC000224CBF /* SpotTests.m */; };
+		53B7131D199FED5900224CBF /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53B7131C199FED5900224CBF /* ArcGIS.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		53B7130E199FEBC000224CBF /* SpotTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpotTests-Info.plist"; sourceTree = "<group>"; };
 		53B71310199FEBC000224CBF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53B71312199FEBC000224CBF /* SpotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotTests.m; sourceTree = "<group>"; };
+		53B7131C199FED5900224CBF /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../../../Library/SDKs/ArcGIS/iOS/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 		53B712EE199FEBC000224CBF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				53B7131C199FED5900224CBF /* ArcGIS.bundle */,
 				53B712EF199FEBC000224CBF /* Spot-Info.plist */,
 				53B712F0199FEBC000224CBF /* InfoPlist.strings */,
 				53B712F3199FEBC000224CBF /* main.m */,
@@ -230,6 +233,7 @@
 			files = (
 				53B71300199FEBC000224CBF /* Images.xcassets in Resources */,
 				53B712F2199FEBC000224CBF /* InfoPlist.strings in Resources */,
+				53B7131D199FED5900224CBF /* ArcGIS.bundle in Resources */,
 				53B712FB199FEBC000224CBF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,9 +380,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/iOS/";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Spot/Spot-Prefix.pch";
 				INFOPLIST_FILE = "Spot/Spot-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					ArcGIS,
+					"-l",
+					"c++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -389,9 +401,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/iOS/";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Spot/Spot-Prefix.pch";
 				INFOPLIST_FILE = "Spot/Spot-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					ArcGIS,
+					"-l",
+					"c++",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
