@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <ArcGIS/ArcGIS.h>
 
-@interface ViewController : UIViewController <AGSCalloutDelegate>
+@interface ViewController : UIViewController <AGSCalloutDelegate, CLLocationManagerDelegate>
 @property (strong, nonatomic) IBOutlet AGSMapView *mapView;
 
 @end
