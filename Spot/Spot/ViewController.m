@@ -7,16 +7,68 @@
 //
 
 #import "ViewController.h"
+#import "ParkingData.h"
 
 @interface ViewController ()
-
+@property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *longitudeLabel;
 @end
 
 @implementation ViewController
 
+CLLocationManager *locationManager;
+
+- (IBAction)parkOut:(UIButton *)sender {
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    [locationManager startUpdatingLocation];
+}
+
+- (IBAction)parkIn:(UIButton *)sender {
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    [locationManager startUpdatingLocation];
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"didFailWithError: %@", error);
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [errorAlert show];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    NSLog(@"didUpdateToLocation: %@", [locations lastObject]);
+    CLLocation *currentLocation = [locations lastObject];
+    
+    if (currentLocation != nil) {
+        ParkingData *parking = [[ParkingData alloc] init];
+        
+        parking.longitude = currentLocation.coordinate.longitude;
+        parking.latitude = currentLocation.coordinate.latitude;
+        
+        NSLog(@"longtitude: %f", parking.longitude);
+        NSLog(@"longtitude: %f", parking.latitude);
+        
+        self.longitudeLabel.text = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.longitude];
+        self.latitudeLabel.text = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.latitude];
+        [locationManager stopUpdatingLocation];
+    }
+}
+
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    locationManager = [[CLLocationManager alloc] init];
 	
     //Add a basemap tiled layer
     NSURL* url = [NSURL URLWithString:@"http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer"];

@@ -22,6 +22,8 @@
 		53B71311199FEBC000224CBF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53B7130F199FEBC000224CBF /* InfoPlist.strings */; };
 		53B71313199FEBC000224CBF /* SpotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B71312199FEBC000224CBF /* SpotTests.m */; };
 		53B7131D199FED5900224CBF /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53B7131C199FED5900224CBF /* ArcGIS.bundle */; };
+		53B7132019A01EB000224CBF /* ParkingData.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B7131F19A01EB000224CBF /* ParkingData.m */; };
+		53B7132319A026F200224CBF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B7132219A026F100224CBF /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,9 @@
 		53B71310199FEBC000224CBF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		53B71312199FEBC000224CBF /* SpotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotTests.m; sourceTree = "<group>"; };
 		53B7131C199FED5900224CBF /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../../Library/SDKs/ArcGIS/iOS/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
+		53B7131E19A01EB000224CBF /* ParkingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParkingData.h; sourceTree = "<group>"; };
+		53B7131F19A01EB000224CBF /* ParkingData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkingData.m; sourceTree = "<group>"; };
+		53B7132219A026F100224CBF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53B7132319A026F200224CBF /* CoreLocation.framework in Frameworks */,
 				53B712EA199FEBC000224CBF /* CoreGraphics.framework in Frameworks */,
 				53B712EC199FEBC000224CBF /* UIKit.framework in Frameworks */,
 				53B712E8199FEBC000224CBF /* Foundation.framework in Frameworks */,
@@ -103,6 +109,7 @@
 		53B712E6199FEBC000224CBF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53B7132219A026F100224CBF /* CoreLocation.framework */,
 				53B7131C199FED5900224CBF /* ArcGIS.bundle */,
 				53B712E7199FEBC000224CBF /* Foundation.framework */,
 				53B712E9199FEBC000224CBF /* CoreGraphics.framework */,
@@ -120,6 +127,7 @@
 				53B712F9199FEBC000224CBF /* Main.storyboard */,
 				53B712FC199FEBC000224CBF /* ViewController.h */,
 				53B712FD199FEBC000224CBF /* ViewController.m */,
+				53B7132119A01EB600224CBF /* Model */,
 				53B712FF199FEBC000224CBF /* Images.xcassets */,
 				53B712EE199FEBC000224CBF /* Supporting Files */,
 			);
@@ -153,6 +161,16 @@
 				53B7130F199FEBC000224CBF /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		53B7132119A01EB600224CBF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				53B7131E19A01EB000224CBF /* ParkingData.h */,
+				53B7131F19A01EB000224CBF /* ParkingData.m */,
+			);
+			name = Model;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +273,7 @@
 			files = (
 				53B712FE199FEBC000224CBF /* ViewController.m in Sources */,
 				53B712F8199FEBC000224CBF /* AppDelegate.m in Sources */,
+				53B7132019A01EB000224CBF /* ParkingData.m in Sources */,
 				53B712F4199FEBC000224CBF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,6 +495,7 @@
 				53B71318199FEBC000224CBF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		53B71319199FEBC000224CBF /* Build configuration list for PBXNativeTarget "SpotTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +504,7 @@
 				53B7131B199FEBC000224CBF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
