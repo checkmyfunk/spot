@@ -12,27 +12,36 @@
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *longitudeLabel;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 @end
 
 @implementation ViewController
 
-CLLocationManager *locationManager;
+- (CLLocationManager *)locationManager{
+    if(!_locationManager){
+        _locationManager = [[CLLocationManager alloc] init];
+    }
+    
+    return _locationManager;
+}
+//CLLocationManager *locationManager;
 
 - (IBAction)parkOut:(UIButton *)sender {
-    locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
-    [locationManager startUpdatingLocation];
+    [self setUpViewControllerToStartUpdatingLocation];
 }
 
 - (IBAction)parkIn:(UIButton *)sender {
-    locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
-    [locationManager startUpdatingLocation];
+    [self setUpViewControllerToStartUpdatingLocation];
 }
 
 #pragma mark - CLLocationManagerDelegate
+
+- (void)setUpViewControllerToStartUpdatingLocation{
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    [self.locationManager startUpdatingLocation];
+}
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
@@ -58,8 +67,48 @@ CLLocationManager *locationManager;
         
         self.longitudeLabel.text = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.longitude];
         self.latitudeLabel.text = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.latitude];
-        [locationManager stopUpdatingLocation];
+        
+        NSURL* parkURL = [NSURL URLWithString:@"http://services.arcgis.com/N2GXMYZXEr0aZccy/arcgis/rest/services/Parking_Regulation_Shapefile/FeatureServer/0"];
+        self.featureServiceTable = [[AGSGDBFeatureServiceTable alloc]
+                                    initWithServiceURL:parkURL
+                                    credential:nil
+                                    spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
+        
+        //from the feature service table (online)
+        self.featureTableLayer = [[AGSFeatureTableLayer alloc]
+                                  initWithFeatureTable:self.featureServiceTable];
+        //add the layer to the map
+        self.featureTableLayer.delegate = self;
+        [self.mapView addMapLayer:self.featureTableLayer withName:@"Feature Layer"];
+        
+        //Create a geometry
+        AGSPoint *point = [[AGSPoint alloc]initWithX:currentLocation.coordinate.longitude y: currentLocation.coordinate.latitude spatialReference:[AGSSpatialReference wgs84SpatialReference]];
+        
+        //Instantiate a new feature
+        AGSGDBFeature *feature = [[AGSGDBFeature alloc]initWithTable:self.featureServiceTable];
+        
+        //Set the geometry
+        [feature setGeometry:point];
+        
+        //Add the feature to the AGSGDBFeatureTable
+        NSError* err;
+        BOOL success = [self.featureServiceTable saveFeature:feature error:&err];
+        
+        if (success){
+            NSLog(@"Success adding this objectId");
+        }
+        else {
+            NSLog(@"Fail. Investigate this error : %@", [err localizedDescription]);
+        }
+
+        
+        [self stopUpdatingLocation];
     }
+}
+
+- (void)stopUpdatingLocation {
+    [self.locationManager stopUpdatingLocation];
+    self.locationManager.delegate = nil;
 }
 
 
@@ -68,7 +117,7 @@ CLLocationManager *locationManager;
 {
     [super viewDidLoad];
     
-    locationManager = [[CLLocationManager alloc] init];
+    self.locationManager = [[CLLocationManager alloc] init];
 	
     //Add a basemap tiled layer
     NSURL* url = [NSURL URLWithString:@"http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer"];
