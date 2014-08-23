@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *longitudeLabel;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) ParkingData *parking;
+
 @end
 
 @implementation ViewController
@@ -51,27 +53,27 @@
     [errorAlert show];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     NSLog(@"didUpdateToLocation: %@", [locations lastObject]);
     CLLocation *currentLocation = [locations lastObject];
     
-    if (currentLocation != nil) {
-        ParkingData *parking = [[ParkingData alloc] init];
+    if (currentLocation) {
+        self.parking = [[ParkingData alloc] init];
+        self.parking.longitude = currentLocation.coordinate.longitude;
+        self.parking.latitude = currentLocation.coordinate.latitude;
         
-        parking.longitude = currentLocation.coordinate.longitude;
-        parking.latitude = currentLocation.coordinate.latitude;
+        NSLog(@"longtitude: %f", self.parking.longitude);
+        NSLog(@"longtitude: %f", self.parking.latitude);
         
-        NSLog(@"longtitude: %f", parking.longitude);
-        NSLog(@"longtitude: %f", parking.latitude);
-        
-        self.longitudeLabel.text = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.longitude];
-        self.latitudeLabel.text = [NSString stringWithFormat:@"%.8f", currentLocation.coordinate.latitude];
+        self.longitudeLabel.text = [NSString stringWithFormat:@"%.8f", self.parking.longitude];
+        self.latitudeLabel.text = [NSString stringWithFormat:@"%.8f", self.parking.latitude];
         
         NSURL* parkURL = [NSURL URLWithString:@"http://services.arcgis.com/N2GXMYZXEr0aZccy/arcgis/rest/services/Parking_Regulation_Shapefile/FeatureServer/0"];
+        AGSCredential *credential = [[AGSCredential alloc] initWithUser:@"amax1mov" password:@"Welcome1"];
+        
         self.featureServiceTable = [[AGSGDBFeatureServiceTable alloc]
                                     initWithServiceURL:parkURL
-                                    credential:nil
+                                    credential:credential
                                     spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
         
         //from the feature service table (online)
@@ -81,8 +83,20 @@
         self.featureTableLayer.delegate = self;
         [self.mapView addMapLayer:self.featureTableLayer withName:@"Feature Layer"];
         
+        [self stopUpdatingLocation];
+    }
+}
+
+- (void)stopUpdatingLocation {
+    [self.locationManager stopUpdatingLocation];
+    self.locationManager.delegate = nil;
+}
+
+- (void)layerDidLoad:(AGSLayer *)layer {
+    
+    if (self.parking) {
         //Create a geometry
-        AGSPoint *point = [[AGSPoint alloc]initWithX:currentLocation.coordinate.longitude y: currentLocation.coordinate.latitude spatialReference:[AGSSpatialReference wgs84SpatialReference]];
+        AGSPoint *point = [[AGSPoint alloc]initWithX:self.parking.longitude y: self.parking.latitude spatialReference:[AGSSpatialReference wgs84SpatialReference]];
         
         //Instantiate a new feature
         AGSGDBFeature *feature = [[AGSGDBFeature alloc]initWithTable:self.featureServiceTable];
@@ -100,18 +114,8 @@
         else {
             NSLog(@"Fail. Investigate this error : %@", [err localizedDescription]);
         }
-
-        
-        [self stopUpdatingLocation];
     }
 }
-
-- (void)stopUpdatingLocation {
-    [self.locationManager stopUpdatingLocation];
-    self.locationManager.delegate = nil;
-}
-
-
 
 - (void)viewDidLoad
 {
@@ -125,6 +129,7 @@
     
     AGSTiledMapServiceLayer *tiledLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
     AGSFeatureLayer *signsLayer = [AGSFeatureLayer featureServiceLayerWithURL:parkURL mode:AGSFeatureLayerModeOnDemand];
+    
     
     //expose layer fields to be accssible by callouts
     signsLayer.outFields = [NSArray arrayWithObject:@"*"];
