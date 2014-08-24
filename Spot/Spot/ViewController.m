@@ -69,11 +69,10 @@
         self.latitudeLabel.text = [NSString stringWithFormat:@"%.8f", self.parking.latitude];
         
         NSURL* parkURL = [NSURL URLWithString:@"http://services.arcgis.com/N2GXMYZXEr0aZccy/arcgis/rest/services/Parking_Regulation_Shapefile/FeatureServer/0"];
-        AGSCredential *credential = [[AGSCredential alloc] initWithUser:@"amax1mov" password:@"Welcome1"];
         
         self.featureServiceTable = [[AGSGDBFeatureServiceTable alloc]
                                     initWithServiceURL:parkURL
-                                    credential:credential
+                                    credential:nil
                                     spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
         
         //from the feature service table (online)
