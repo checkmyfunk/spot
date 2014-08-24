@@ -143,7 +143,7 @@
     
     //Get current location and zoom into it
     [self.mapView.locationDisplay startDataSource];
-    self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeDefault;
+    self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeCompassNavigation;
     //amount of map visible space is left untill map starts shifting to follows the location
     self.mapView.locationDisplay.wanderExtentFactor = 0.5;
     
