@@ -141,6 +141,12 @@
     
     self.mapView.callout.delegate = self;
     
+    //Get current location and zoom into it
+    [self.mapView.locationDisplay startDataSource];
+    self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeDefault;
+    //amount of map visible space is left untill map starts shifting to follows the location
+    self.mapView.locationDisplay.wanderExtentFactor = 0.5;
+    
 }
 
 - (BOOL) callout:(AGSCallout *)callout willShowForFeature:(id<AGSFeature>)feature layer:(AGSLayer<AGSHitTestable> *)layer mapPoint:(AGSPoint *)mapPoint {
