@@ -123,7 +123,7 @@
     self.locationManager = [[CLLocationManager alloc] init];
 	
     //Add a basemap tiled layer
-    NSURL* url = [NSURL URLWithString:@"http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer"];
+    NSURL* url = [NSURL URLWithString:@"http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"];
     NSURL* parkURL = [NSURL URLWithString:@"http://services.arcgis.com/N2GXMYZXEr0aZccy/arcgis/rest/services/Parking_Regulation_Shapefile/FeatureServer/0"];
     
     AGSTiledMapServiceLayer *tiledLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
@@ -144,7 +144,7 @@
     //Get current location and zoom into it
     [self.mapView.locationDisplay startDataSource];
     self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeCompassNavigation;
-    //amount of map visible space is left untill map starts shifting to follows the location
+    //amount of map's visible space is left untill map starts shifting to follows the location
     self.mapView.locationDisplay.wanderExtentFactor = 0.5;
     
 }
