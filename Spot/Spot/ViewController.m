@@ -68,7 +68,7 @@
         self.longitudeLabel.text = [NSString stringWithFormat:@"%.8f", self.parking.longitude];
         self.latitudeLabel.text = [NSString stringWithFormat:@"%.8f", self.parking.latitude];
         
-        NSURL* parkURL = [NSURL URLWithString:@"http://services.arcgis.com/N2GXMYZXEr0aZccy/arcgis/rest/services/Parking_Regulation_Shapefile/FeatureServer/0"];
+        NSURL* parkURL = [NSURL URLWithString:@"http://services3.arcgis.com/pa0kOYCTNBDF5qXk/arcgis/rest/services/Parking_Signs/FeatureServer/0"];
         
         self.featureServiceTable = [[AGSGDBFeatureServiceTable alloc]
                                     initWithServiceURL:parkURL
@@ -124,10 +124,14 @@
 	
     //Add a basemap tiled layer
     NSURL* url = [NSURL URLWithString:@"http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer"];
-    NSURL* parkURL = [NSURL URLWithString:@"http://services.arcgis.com/N2GXMYZXEr0aZccy/arcgis/rest/services/Parking_Regulation_Shapefile/FeatureServer/0"];
+    NSURL* parkURL = [NSURL URLWithString:@"http://services3.arcgis.com/pa0kOYCTNBDF5qXk/arcgis/rest/services/Parking_Signs/FeatureServer/0"];
     
     AGSTiledMapServiceLayer *tiledLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
     AGSFeatureLayer *signsLayer = [AGSFeatureLayer featureServiceLayerWithURL:parkURL mode:AGSFeatureLayerModeOnDemand];
+    
+    //adding graphic layer to draw lines between features - parking sighns
+    AGSGraphicsLayer* myGraphicsLayer = [AGSGraphicsLayer graphicsLayer];
+    [self.mapView addMapLayer:myGraphicsLayer withName:@"Graphics Layer"];
     
     
     //expose layer fields to be accssible by callouts
